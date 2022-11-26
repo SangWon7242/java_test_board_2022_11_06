@@ -28,6 +28,7 @@ public class Main {
       String cmd = sc.nextLine();
 
       Rq rq = new Rq(cmd);
+      Map<String, String> params = rq.getParams();
 
       if(rq.getUrlPath().equals("exit")) {
         System.out.println("프로그램을 종료합니다.");
@@ -38,10 +39,23 @@ public class Main {
         System.out.println("-------------------");
         System.out.println("번호 / 제목");
 
-        for( int i = articles.size() - 1; i >= 0; i-- ) {
-          Article article = articles.get(i);
-          System.out.printf("%d / %s\n", article.id, article.title);
+        boolean orderByIdDesc = true;
+        if(params.containsKey("orderBy") && params.get("orderBy").equals("idAsc")) {
+          orderByIdDesc = false;
         }
+
+        if( orderByIdDesc ) {
+          for( int i = articles.size() - 1; i >= 0; i-- ) {
+            Article article = articles.get(i);
+            System.out.printf("%d / %s\n", article.id, article.title);
+          }
+        }
+        else {
+          for( Article article : articles ) {
+            System.out.printf("%d / %s\n", article.id, article.title);
+          }
+        }
+
 
         System.out.println("-------------------");
       }
@@ -63,8 +77,6 @@ public class Main {
         System.out.printf("%d번 게시물이 생성되었습니다.\n", id);
       }
       else if(rq.getUrlPath().equals("/usr/article/detail")) {
-        Map<String, String> params = rq.getParams();
-
         if(params.containsKey("id") == false) {
           System.out.println("id를 입력해주세요.");
           continue;
