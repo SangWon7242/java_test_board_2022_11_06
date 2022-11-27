@@ -12,7 +12,7 @@ public class Main {
     }
   }
   public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
+    Scanner sc = Container.sc;
 
     makeTestData();
 
@@ -38,13 +38,13 @@ public class Main {
        actionUsrArticleList(rq);
       }
       else if(rq.getUrlPath().equals("/usr/article/write")) {
-        actionUsrArticleWrite(sc);
+        actionUsrArticleWrite();
       }
       else if(rq.getUrlPath().equals("/usr/article/detail")) {
         actionUsrArticleDetail(rq);
       }
       else if(rq.getUrlPath().equals("/usr/article/modify")) {
-        actionUsrArticleModify(sc, rq);
+        actionUsrArticleModify(rq);
       }
       else if(rq.getUrlPath().equals("/usr/article/delete")) {
         actionUsrArticleDelete(rq);
@@ -93,7 +93,7 @@ public class Main {
     System.out.printf("%d번 게시물을 삭제하였습니다.\n", id);
   }
 
-  private static void actionUsrArticleModify(Scanner sc, Rq rq) {
+  private static void actionUsrArticleModify(Rq rq) {
     Map<String, String> params = rq.getParams();
 
     if(params.containsKey("id") == false) {
@@ -119,19 +119,19 @@ public class Main {
     }
 
     System.out.printf("새 제목 : ");
-    article.title = sc.nextLine();
+    article.title = Container.sc.nextLine();
     System.out.printf("새 내용 : ");
-    article.body = sc.nextLine();
+    article.body = Container.sc.nextLine();
 
     System.out.printf("%d번 게시물을 수정하였습니다.\n", article.id);
   }
 
-  private static void actionUsrArticleWrite(Scanner sc) {
+  private static void actionUsrArticleWrite() {
     System.out.println("== 게시물 등록 ==");
     System.out.printf("제목 : ");
-    String title = sc.nextLine();
+    String title = Container.sc.nextLine();
     System.out.printf("내용 : ");
-    String body = sc.nextLine();
+    String body = Container.sc.nextLine();
 
     int id = articleLastId + 1;
     articleLastId = id;
