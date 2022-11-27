@@ -44,12 +44,48 @@ public class Main {
       else if(rq.getUrlPath().equals("/usr/article/detail")) {
         actionUsrArticleDetail(rq, articles);
       }
+      else if(rq.getUrlPath().equals("/usr/article/modify")) {
+        actionUsrArticleModify(sc, rq, articles);
+      }
       else {
         System.out.printf("받은 명령어 : %s\n", cmd);
       }
     }
 
     sc.close();
+  }
+
+  private static void actionUsrArticleModify(Scanner sc, Rq rq, List<Article> articles) {
+    Map<String, String> params = rq.getParams();
+
+    if(params.containsKey("id") == false) {
+      System.out.println("id를 입력해주세요.");
+      return;
+    }
+
+    int id = 0;
+
+    try {
+      id = Integer.parseInt(params.get("id"));
+    }
+    catch (NumberFormatException e) {
+      System.out.println("id를 정수형태로 입력해주세요.");
+      return;
+    }
+
+    Article article = articles.get(id - 1);
+
+    if (id > articles.size()) {
+      System.out.println("게시물이 존재하지 않습니다.");
+      return;
+    }
+
+    System.out.printf("새 제목 : ");
+    article.title = sc.nextLine();
+    System.out.printf("새 내용 : ");
+    article.body = sc.nextLine();
+
+    System.out.printf("%d번 게시물을 수정하였습니다.\n", article.id);
   }
 
   private static void actionUsrArticleWrite(Scanner sc, List<Article> articles, int articleLastId) {
