@@ -1,21 +1,16 @@
 package com.sbs.exam.board;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@ToString
 class Article {
   int id;
   String title;
   String body;
-
-  public Article(int id, String title, String body) {
-    this.id = id;
-    this.title = title;
-    this.body = body;
-  }
-
-  @Override
-  public String toString() {
-    String title = this.title != null ? "\"" + this.title + "\"" : null;
-    String body = this.body != null ? "\"" + this.body + "\"" : null;
-
-    return String.format("{id : %d, title : %s, body : %s}", id, title, body);
-  }
 }
