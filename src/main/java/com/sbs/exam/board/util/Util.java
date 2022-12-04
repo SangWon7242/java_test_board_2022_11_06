@@ -1,12 +1,12 @@
-package com.sbs.exam.board;
+package com.sbs.exam.board.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class Util {
-  static Map<String, String> getParamsFromUrl(String url) {
+public class Util {
+  public static Map<String, String> getParamsFromUrl(String url) {
     Map<String, String> params = new HashMap<>();
     String[] urlBits = url.split("\\?", 2);
 
@@ -26,12 +26,12 @@ class Util {
     return params;
   }
 
-  static String getUrlPathFromUrl(String url) {
+  public static String getUrlPathFromUrl(String url) {
     return url.split("\\?", 2)[0];
   }
 
   // 이 함수는 원본리스트를 훼손하지 않고, 새 리스트를 만듭니다. 즉 정렬이 반대인 복사본리스트를 만들어서 반환합니다.
-  static<T> List<T> reverseList(List<T> list) {
+  public static<T> List<T> reverseList(List<T> list) {
     List<T> reverse = new ArrayList<>(list.size());
 
     for ( int i = list.size() - 1; i >= 0; i-- ) {

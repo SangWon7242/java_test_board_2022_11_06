@@ -1,4 +1,4 @@
-package com.sbs.exam.board;
+package com.sbs.exam.board.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,8 +9,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @Data
 @ToString
-class Article {
-  int id;
-  String title;
-  String body;
+public class Article {
+  private int id;
+  private String title;
+  private String body;
 }
