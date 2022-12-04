@@ -1,6 +1,7 @@
 package com.sbs.exam.board.controller;
 
 import com.sbs.exam.board.container.Container;
+import com.sbs.exam.board.service.ArticleService;
 import com.sbs.exam.board.util.Util;
 import com.sbs.exam.board.vo.Article;
 import com.sbs.exam.board.vo.Rq;
@@ -10,24 +11,14 @@ import java.util.List;
 import java.util.Map;
 
 public class UsrArticleController {
-  private int articleLastId;
+  private ArticleService articleService;
   private List<Article> articles;
 
   public UsrArticleController() {
-    articleLastId = 0;
-    articles = new ArrayList<>();
+    articleService = new ArticleService();
+    articles = articleService.getArticles();
 
-    makeTestData();
-
-    if (articles.size() > 0) {
-      articleLastId = articles.get(articles.size() - 1).getId();
-    }
-  }
-
-  void makeTestData() {
-    for (int i = 1; i <= 100; i++) {
-      articles.add(new Article(i, "제목" + i, "내용" + i));
-    }
+    articleService.makeTestData();
   }
 
   public void actionDelete(Rq rq) {
@@ -38,14 +29,7 @@ public class UsrArticleController {
      return;
    }
 
-    Article foundArticle = getArticleById(id);
-
-    if(foundArticle == null) {
-      System.out.println("해당 게시물은 존재하지 않습니다.");
-      return;
-    }
-
-    articles.remove(foundArticle);
+    articleService.deleteArticleById(id);
 
     System.out.printf("%d번 게시물을 삭제하였습니다.\n", id);
   }
@@ -58,7 +42,7 @@ public class UsrArticleController {
       return;
     }
 
-    Article article = getArticleById(id);
+    Article article = articleService.getArticleById(id);
 
     if(article == null) {
       System.out.println("해당 게시물은 존재하지 않습니다.");
@@ -80,8 +64,7 @@ public class UsrArticleController {
     System.out.printf("내용 : ");
     String body = Container.getSc().nextLine();
 
-    int id = articleLastId + 1;
-    articleLastId = id;
+    int id = articleService.write(title, body);
 
     Article article = new Article(id, title, body);
 
@@ -156,16 +139,6 @@ public class UsrArticleController {
     }
 
     System.out.println("-------------------");
-  }
-
-  private Article getArticleById(int id) {
-    for(Article article : articles) {
-      if(article.getId() == id) {
-        return article;
-      }
-    }
-
-    return null;
   }
 
 }
