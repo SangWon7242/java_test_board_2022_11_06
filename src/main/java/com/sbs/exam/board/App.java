@@ -13,25 +13,24 @@ public class App {
 
   void run() {
     Scanner sc = Container.getSc();
-    Session session = Container.getSession();
 
     System.out.println("== 게시판 v 0.1 ==");
     System.out.println("== 프로그램 시작 ==");
 
     while(true) {
-      Member loginedMember = (Member)session.getAttribute("loginedMember");
+      Rq rq = new Rq();
 
       String promptName = "명령어";
 
-      if(loginedMember != null ) {
+      if(rq.isLogined()) {
+        Member loginedMember = rq.getLoginedMember();
         promptName = loginedMember.getLoginId();
       }
 
       System.out.printf("%s) ", promptName);
       String cmd = sc.nextLine();
 
-      Rq rq = new Rq(cmd);
-      Map<String, String> params = rq.getParams();
+      rq.setCommand(cmd);
 
       if(rq.getUrlPath().equals("exit")) {
         System.out.println("프로그램을 종료합니다.");
