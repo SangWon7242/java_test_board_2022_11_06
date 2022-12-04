@@ -38,16 +38,11 @@ public class UsrArticleController {
      return;
    }
 
-    Article foundArticle = null;
+    Article foundArticle = getArticleById(id);
 
-    for (Article article : articles) {
-      if (article.getId() == id) {
-        foundArticle = article;
-        break;
-      } else if (article.getId() != id) {
-        System.out.println("해당 게시물은 존재하지 않습니다.");
-        return;
-      }
+    if(foundArticle == null) {
+      System.out.println("해당 게시물은 존재하지 않습니다.");
+      return;
     }
 
     articles.remove(foundArticle);
@@ -63,7 +58,12 @@ public class UsrArticleController {
       return;
     }
 
-    Article article = articles.get(id - 1);
+    Article article = getArticleById(id);
+
+    if(article == null) {
+      System.out.println("해당 게시물은 존재하지 않습니다.");
+      return;
+    }
 
     System.out.printf("새 제목 : ");
     article.setTitle(Container.getSc().nextLine());
@@ -157,4 +157,15 @@ public class UsrArticleController {
 
     System.out.println("-------------------");
   }
+
+  private Article getArticleById(int id) {
+    for(Article article : articles) {
+      if(article.getId() == id) {
+        return article;
+      }
+    }
+
+    return null;
+  }
+
 }

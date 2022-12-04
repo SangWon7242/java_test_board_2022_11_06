@@ -86,16 +86,6 @@ public class UsrMemberController {
     System.out.printf("%s님 환영합니다.\n", member.getLoginId());
   }
 
-  private Member getMemberLoginId(String loginId) {
-    for(Member member : members) {
-      if(member.getLoginId().equals(loginId)) {
-        return member;
-      }
-    }
-
-    return null;
-  }
-
   public void actionLogout(Rq rq) {
     Member loginedMember = (Member)Container.getSession().getAttribute("loginedMember");
 
@@ -109,4 +99,15 @@ public class UsrMemberController {
 
     System.out.println("로그아웃 되었습니다.");
   }
+
+  private Member getMemberLoginId(String loginId) {
+    for(Member member : members) {
+      if(member.getLoginId().equals(loginId)) {
+        return member;
+      }
+    }
+
+    return null;
+  }
+
 }
