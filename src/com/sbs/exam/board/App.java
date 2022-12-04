@@ -55,6 +55,9 @@ public class App {
       else if(rq.getUrlPath().equals("/usr/member/login")) {
         Container.usrMemberController.actionLogin(rq);
       }
+      else if(rq.getUrlPath().equals("/usr/member/logout")) {
+        Container.usrMemberController.actionLogout(rq);
+      }
       else {
         System.out.printf("받은 명령어 : %s\n", cmd);
       }
